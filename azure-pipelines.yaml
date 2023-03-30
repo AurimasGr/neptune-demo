@@ -13,8 +13,26 @@ stages:
       pool:
         vmImage: ubuntu-latest
       steps:
-      - script: echo Hello, world!
-        displayName: 'Run some bash'
+      - script: echo "Hello, world!"
+        displayName: 'Lint'
+
+      - script: echo "Hello, world!"
+        displayName: 'Unit Tests'
+
+      - script: echo "Hello, world!"
+        displayName: 'Integration Tests'
+
+      - script: echo "Hello, world!"
+        displayName: 'Build Training Pipeline'
+
+      - script: echo "Hello, world!"
+        displayName: 'Run Training Pipeline'
+
+      - script: echo "Hello, world!"
+        displayName: 'Compare Models + Promote'
+
+      - script: echo "Hello, world!"
+        displayName: 'Deploy Model'
 
       - script: ls
         displayName: 'Run some more bash'
