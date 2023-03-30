@@ -11,4 +11,7 @@ pool:
 
 steps:
 - script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  displayName: 'Run some bash'
+
+- script: echo Hello, world!
+  displayName: 'Run some more bash'
