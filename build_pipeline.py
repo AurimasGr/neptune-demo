@@ -130,8 +130,8 @@ from azure.ai.ml import dsl, Input, Output
     description="E2E data_perp-train pipeline",
 )
 def credit_defaults_pipeline(
-    pipeline_job_data_input,
-    pipeline_job_test_train_ratio,
+    # pipeline_job_data_input,
+    # pipeline_job_test_train_ratio,
     pipeline_job_learning_rate,
     pipeline_job_registered_model_name,
 ):
