@@ -19,9 +19,9 @@ except Exception as ex:
 # Get a handle to the workspace
 ml_client = MLClient(
     credential=credential,
-    subscription_id="d7af46fb-8008-4edc-b8bf-ee92f5e1dbb6",
-    resource_group_name="Neptune",
-    workspace_name="neptune-ai-demo",
+    subscription_id="e1685108-7640-4417-8331-c2a3f43bc109",
+    resource_group_name="neptune",
+    workspace_name="aurimas-test-1",
 )
 
 from azure.ai.ml.entities import Data
