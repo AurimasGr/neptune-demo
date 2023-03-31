@@ -25,11 +25,12 @@ stages:
       - script: echo "Hello, world!"
         displayName: 'Integration Tests'
 
-      - script: echo "Hello, world!"
-        displayName: 'Build Training Pipeline'
-
-      - script: echo "Hello, world!"
-        displayName: 'Run Training Pipeline'
+      - script: python3 ./pipeline/build_pipeline.py
+        displayName: 'Build and Run Training Pipeline'
+        env:
+          AZURE_TENANT_ID: $(tenant)
+          AZURE_CLIENT_ID: $(client)
+          AZURE_CLIENT_SECRET: $(secret)
 
       - script: echo "Hello, world!"
         displayName: 'Compare Models + Promote'
