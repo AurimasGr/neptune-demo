@@ -92,19 +92,17 @@ data_prep_component = command(
     name="data_prep_credit_defaults",
     display_name="Data preparation for training",
     description="reads a .xl input, split the input to train and test",
-    inputs={
-        "data": Input(type="uri_folder"),
-        "test_train_ratio": Input(type="number"),
-    },
+    # inputs={
+    #     "data": Input(type="uri_folder"),
+    #     "test_train_ratio": Input(type="number"),
+    # },
     outputs=dict(
         train_data=Output(type="uri_folder", mode="rw_mount"),
         test_data=Output(type="uri_folder", mode="rw_mount"),
     ),
     # The source folder of the component
     code=data_prep_src_dir,
-    command="""python data_prep.py \
-            --data ${{inputs.data}} --test_train_ratio ${{inputs.test_train_ratio}} \
-            --train_data ${{outputs.train_data}} --test_data ${{outputs.test_data}} \
+    command="""python data_preprocessing.py
             """,
     environment=f"{custom_env_name}:{custom_env_version}",
 )
