@@ -60,14 +60,19 @@ def data_preprocessing_component(
     # Concatenate x and y train data
     train_df = pd.concat([X_train, y_train], axis=1)
 
+    print(train_df)
+
     # Concatenate x and y validation data
     valid_df = pd.concat([X_valid, y_valid], axis=1)
+
+    print(valid_df)
 
     # Save train and validation data
     TRAIN_DATA_PATH = os.path.join(train_data, "train_data.csv")
     VALID_DATA_PATH = os.path.join(valid_data, "validation_data.csv")
-    train_df.to_csv(TRAIN_DATA_PATH, index=False)
-    valid_df.to_csv(VALID_DATA_PATH, index=False)
+
+    # train_df.to_csv(TRAIN_DATA_PATH, index=False)
+    # valid_df.to_csv(VALID_DATA_PATH, index=False)
 
 
 if __name__ == "__main__":
