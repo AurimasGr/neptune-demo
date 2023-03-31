@@ -32,6 +32,8 @@ def data_preprocessing_component(
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=str, help="path to input data")
+    parser.add_argument("--train_data", type=str, help="path to train data")
+    parser.add_argument("--test_data", type=str, help="path to test data")
     args = parser.parse_args()
 
     # (neptune) Initialize Neptune run
@@ -60,16 +62,16 @@ def data_preprocessing_component(
     # Concatenate x and y train data
     train_df = pd.concat([X_train, y_train], axis=1)
 
-    print(train_df)
-
     # Concatenate x and y validation data
     valid_df = pd.concat([X_valid, y_valid], axis=1)
 
-    print(valid_df)
-
     # Save train and validation data
-    TRAIN_DATA_PATH = os.path.join(train_data, "train_data.csv")
-    VALID_DATA_PATH = os.path.join(valid_data, "validation_data.csv")
+    TRAIN_DATA_PATH = os.path.join(args.train_data, "train_data.csv")
+    VALID_DATA_PATH = os.path.join(args.valid_data, "validation_data.csv")
+
+    train_df.to_csv(os.path.join(TRAIN_DATA_PATH, "train_data.csv"), index=False)
+
+    valid_df.to_csv(os.path.join(VALID_DATA_PATH, "validation_data.csv"), index=False)
 
     # train_df.to_csv(TRAIN_DATA_PATH, index=False)
     # valid_df.to_csv(VALID_DATA_PATH, index=False)

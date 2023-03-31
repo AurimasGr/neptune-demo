@@ -152,7 +152,7 @@ def credit_defaults_pipeline(
     # keys will code for the pipeline output identifier
     return {
         "pipeline_job_train_data": data_prep_job.outputs.train_data,
-        "pipeline_job_test_data": data_prep_job.outputs.test_data,
+        "pipeline_job_valid_data": data_prep_job.outputs.valid_data,
     }
 
 registered_model_name = "credit_defaults_model"
