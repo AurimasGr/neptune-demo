@@ -161,7 +161,7 @@ registered_model_name = "credit_defaults_model"
 # Let's instantiate the pipeline with the parameters of our choice
 pipeline = credit_defaults_pipeline(
     # pipeline_job_data_input=Input(type="uri_file", path=credit_data.path),
-    pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path),
+    # pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path),
     pipeline_job_test_train_ratio=0.24,
     pipeline_job_learning_rate=0.05,
     pipeline_job_registered_model_name=registered_model_name,
