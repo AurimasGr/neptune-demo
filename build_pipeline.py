@@ -30,7 +30,7 @@ from azure.ai.ml.constants import AssetTypes
 web_path = "https://raw.githubusercontent.com/neptune-ai/examples/main/use-cases/time-series-forecasting/walmart-sales/dataset/aggregate_data.csv"
 
 aggregate_data = Data(
-    name="creditcard_defaults",
+    name="aggregate_data",
     path=web_path,
     type=AssetTypes.URI_FILE,
     description="Dataset for credit card defaults",
