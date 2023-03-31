@@ -143,7 +143,7 @@ def credit_defaults_pipeline(
     # using train_func like a python call with its own inputs
     train_job = train_component(
         train_data=data_prep_job.outputs.train_data,  # note: using outputs from previous step
-        test_data=data_prep_job.outputs.test_data,  # note: using outputs from previous step
+        valid_data=data_prep_job.outputs.valid_data,  # note: using outputs from previous step
         learning_rate=pipeline_job_learning_rate,  # note: using a pipeline input as parameter
         registered_model_name=pipeline_job_registered_model_name,
     )
