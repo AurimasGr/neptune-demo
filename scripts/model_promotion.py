@@ -1,11 +1,11 @@
-import neptune
+import neptune.new as neptune
 from neptune.exceptions import ModelNotFound
 
-model_name = "pickled_model"
 
 # (Neptune) Get latest model from training stage
-model_key = "PIPELINES"
-project_key = "SHOW"
+model_key = "PRO"
+project_key = "TSF"
+
 
 try:
     model = neptune.init_model(
@@ -27,17 +27,17 @@ challenger = neptune.init_model_version(with_id=challenger_model_id)
 champion = neptune.init_model_version(with_id=champion_model_id)
 
 # (Neptune) Get model weights from training stage
-challenger["model"][model_name].download()
-champion["model"][model_name].download()
+challenger["serialized_model"].download()
+champion["serialized_model"].download()
 
 # (Neptune) Move model to production
-challenger_score = challenger["metrics/validation/scores/class_0"].fetch()
-champion_score = champion["metrics/validation/scores/class_0"].fetch()
+challenger_score = challenger["scores"].fetch()
+champion_score = champion["scores"].fetch()
 
 print(
-    f"Challenger score: {challenger_score['fbeta_score']}\nChampion score: {champion_score['fbeta_score']}"
+    f"Challenger score: {challenger_score['rmse']}\nChampion score: {champion_score['rmse']}"
 )
-if challenger_score["fbeta_score"] > champion_score["fbeta_score"]:
+if challenger_score["rmse"] < champion_score["rmse"]:
     print(
         f"Promoting challenger model {challenger_model_id} to production and archiving current champion model {champion_model_id}"
     )

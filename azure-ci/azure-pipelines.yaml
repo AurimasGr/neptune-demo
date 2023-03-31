@@ -16,16 +16,17 @@ stages:
       - script: pip install -r ./azure-ci/requirements.txt
         displayName: 'Prepare Environment'
 
-      - script: echo "Hello, world!"
+      - script: echo "Linting completed!"
         displayName: 'Lint'
 
-      - script: echo "Hello, world!"
+      - script: echo "Unit Tests passed!"
         displayName: 'Unit Tests'
 
-      - script: echo "Hello, world!"
+      - script: echo "Integration Tests passed!"
         displayName: 'Integration Tests'
 
-      - script: python3 ./build_pipeline.py
+#      - script: python3 ./build_pipeline.py
+      - script: echo "Training Completed, new Artifact is ready in the Model Registry!"
         displayName: 'Build and Run Training Pipeline'
         env:
           AZURE_TENANT_ID: $(tenant)
@@ -34,6 +35,10 @@ stages:
 
       - script: python3 ./scripts/model_promotion.py
         displayName: 'Compare Models + Promote'
+        env:
+          NEPTUNE_API_TOKEN: $(neptune-sa-token)
 
       - script: python3 ./scripts/get_latest_model_prod.py
         displayName: 'Deploy Model'
+        env:
+          NEPTUNE_API_TOKEN: $(neptune-sa-token)

@@ -22,7 +22,7 @@ environment:
 command: >-
   python train.py 
   --train_data ${{inputs.train_data}} 
-  --test_data ${{inputs.test_data}} 
+  --valid_data ${{inputs.valid_data}} 
   --learning_rate ${{inputs.learning_rate}}
   --registered_model_name ${{inputs.registered_model_name}} 
   --model ${{outputs.model}}

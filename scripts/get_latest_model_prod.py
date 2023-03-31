@@ -1,11 +1,9 @@
-import neptune
+import neptune.new as neptune
 from neptune.exceptions import ModelNotFound
 
-model_name = "pickled_model"
 
-# (Neptune) Get latest model from training stage
-model_key = "PIPELINES"
-project_key = "SHOW"
+model_key = "PRO"
+project_key = "TSF"
 
 try:
     model = neptune.init_model(
@@ -24,6 +22,6 @@ except ModelNotFound:
 prod_model = neptune.init_model_version(with_id=prod_model_id)
 
 # (Neptune) Get model weights from training stage
-prod_model["model"][model_name].download()
+prod_model["serialized_model"].download()
 
 print(f"model to be deployed: {prod_model_id}. Model has been downloaded and is ready for deployment.")
