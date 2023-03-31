@@ -1,5 +1,9 @@
 import neptune.new as neptune
 from neptune.exceptions import ModelNotFound
+import os
+
+
+os.environ['NEPTUNE_PROJECT'] = "common/project-time-series-forecasting"
 
 
 model_key = "PRO"
