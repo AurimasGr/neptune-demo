@@ -32,11 +32,8 @@ stages:
           AZURE_CLIENT_ID: $(client)
           AZURE_CLIENT_SECRET: $(secret)
 
-      - script: echo "Hello, world!"
+      - script: python3 ./scripts/model_promotion.py
         displayName: 'Compare Models + Promote'
 
-      - script: echo "Hello, world!"
+      - script: python3 ./scripts/get_latest_model_prod.py
         displayName: 'Deploy Model'
-
-      - script: ls
-        displayName: 'Run some more bash'
