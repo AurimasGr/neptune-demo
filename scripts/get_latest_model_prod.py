@@ -1,4 +1,4 @@
-import neptune.new as neptune
+import neptune
 from neptune.exceptions import ModelNotFound
 import os
 
