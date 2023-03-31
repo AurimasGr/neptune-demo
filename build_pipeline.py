@@ -27,9 +27,9 @@ ml_client = MLClient(
 from azure.ai.ml.entities import Data
 from azure.ai.ml.constants import AssetTypes
 
-web_path = "https://archive.ics.uci.edu/ml/machine-learning-databases/00350/default%20of%20credit%20card%20clients.xls"
+web_path = "https://raw.githubusercontent.com/neptune-ai/examples/main/use-cases/time-series-forecasting/walmart-sales/dataset/aggregate_data.csv"
 
-credit_data = Data(
+aggregate_data = Data(
     name="creditcard_defaults",
     path=web_path,
     type=AssetTypes.URI_FILE,
@@ -38,10 +38,26 @@ credit_data = Data(
     version="1.0.0",
 )
 
-credit_data = ml_client.data.create_or_update(credit_data)
+aggregate_data = ml_client.data.create_or_update(aggregate_data)
 print(
-    f"Dataset with name {credit_data.name} was registered to workspace, the dataset version is {credit_data.version}"
+    f"Dataset with name {aggregate_data.name} was registered to workspace, the dataset version is {aggregate_data.version}"
 )
+
+# web_path = "https://archive.ics.uci.edu/ml/machine-learning-databases/00350/default%20of%20credit%20card%20clients.xls"
+
+# credit_data = Data(
+#     name="creditcard_defaults",
+#     path=web_path,
+#     type=AssetTypes.URI_FILE,
+#     description="Dataset for credit card defaults",
+#     tags={"source_type": "web", "source": "UCI ML Repo"},
+#     version="1.0.0",
+# )
+
+# credit_data = ml_client.data.create_or_update(credit_data)
+# print(
+#     f"Dataset with name {credit_data.name} was registered to workspace, the dataset version is {credit_data.version}"
+# )
 
 custom_env_name = "aml-scikit-learn"
 custom_env_version = "0.1.0"
@@ -123,7 +139,8 @@ registered_model_name = "credit_defaults_model"
 
 # Let's instantiate the pipeline with the parameters of our choice
 pipeline = credit_defaults_pipeline(
-    pipeline_job_data_input=Input(type="uri_file", path=credit_data.path),
+    # pipeline_job_data_input=Input(type="uri_file", path=credit_data.path),
+    pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path),
     pipeline_job_test_train_ratio=0.24,
     pipeline_job_learning_rate=0.05,
     pipeline_job_registered_model_name=registered_model_name,
