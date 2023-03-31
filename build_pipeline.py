@@ -67,6 +67,27 @@ train_src_dir = "./components/train"
 from azure.ai.ml import command
 from azure.ai.ml import Input, Output
 
+# data_prep_component = command(
+#     name="data_prep_credit_defaults",
+#     display_name="Data preparation for training",
+#     description="reads a .xl input, split the input to train and test",
+#     inputs={
+#         "data": Input(type="uri_folder"),
+#         "test_train_ratio": Input(type="number"),
+#     },
+#     outputs=dict(
+#         train_data=Output(type="uri_folder", mode="rw_mount"),
+#         test_data=Output(type="uri_folder", mode="rw_mount"),
+#     ),
+#     # The source folder of the component
+#     code=data_prep_src_dir,
+#     command="""python data_prep.py \
+#             --data ${{inputs.data}} --test_train_ratio ${{inputs.test_train_ratio}} \
+#             --train_data ${{outputs.train_data}} --test_data ${{outputs.test_data}} \
+#             """,
+#     environment=f"{custom_env_name}:{custom_env_version}",
+# )
+
 data_prep_component = command(
     name="data_prep_credit_defaults",
     display_name="Data preparation for training",
@@ -116,8 +137,8 @@ def credit_defaults_pipeline(
 ):
     # using data_prep_function like a python call with its own inputs
     data_prep_job = data_prep_component(
-        data=pipeline_job_data_input,
-        test_train_ratio=pipeline_job_test_train_ratio,
+        # data=pipeline_job_data_input,
+        # test_train_ratio=pipeline_job_test_train_ratio,
     )
 
     # using train_func like a python call with its own inputs
