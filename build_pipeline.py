@@ -92,10 +92,10 @@ data_prep_component = command(
     name="data_prep_credit_defaults",
     display_name="Data preparation for training",
     description="reads a .xl input, split the input to train and test",
-    # inputs={
-    #     "data": Input(type="uri_folder"),
-    #     "test_train_ratio": Input(type="number"),
-    # },
+    inputs={
+        "data": Input(type="uri_folder"),
+        # "test_train_ratio": Input(type="number"),
+    },
     outputs=dict(
         train_data=Output(type="uri_folder", mode="rw_mount"),
         test_data=Output(type="uri_folder", mode="rw_mount"),
@@ -129,14 +129,14 @@ from azure.ai.ml import dsl, Input, Output
     description="E2E data_perp-train pipeline",
 )
 def credit_defaults_pipeline(
-    # pipeline_job_data_input,
+    pipeline_job_data_input,
     # pipeline_job_test_train_ratio,
     pipeline_job_learning_rate,
     pipeline_job_registered_model_name,
 ):
     # using data_prep_function like a python call with its own inputs
     data_prep_job = data_prep_component(
-        # data=pipeline_job_data_input,
+        data=pipeline_job_data_input,
         # test_train_ratio=pipeline_job_test_train_ratio,
     )
 
@@ -160,7 +160,7 @@ registered_model_name = "credit_defaults_model"
 # Let's instantiate the pipeline with the parameters of our choice
 pipeline = credit_defaults_pipeline(
     # pipeline_job_data_input=Input(type="uri_file", path=credit_data.path),
-    # pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path),
+    pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path),
     # pipeline_job_test_train_ratio=0.24,
     pipeline_job_learning_rate=0.05,
     pipeline_job_registered_model_name=registered_model_name,

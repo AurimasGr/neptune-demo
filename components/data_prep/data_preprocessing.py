@@ -8,6 +8,7 @@
 # from mldesigner import Input, Output, command_component
 # from neptune.integrations.xgboost import NeptuneCallback
 from utils import *
+import argparse
 
 
 # @command_component(
@@ -28,6 +29,11 @@ def data_preprocessing_component(
     # train_data: Output(type="uri_folder", description="Train data"),
     # valid_data: Output(type="uri_folder", description="Validation data"),
 ):
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data", type=str, help="path to input data")
+    args = parser.parse_args()
+
     # (neptune) Initialize Neptune run
     # run = neptune.init_run(
     #     tags=["baseline", "xgboost", "walmart-sales"],
@@ -35,7 +41,7 @@ def data_preprocessing_component(
     # )
 
     # Load dataset
-    df = load_data(dataset_path, cache=True)
+    df = load_data(args.data, cache=True)
 
     # Normalize sales data
     df_normalized = normalize_data(df, "Weekly_Sales")
