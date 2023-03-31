@@ -102,8 +102,8 @@ data_prep_component = command(
     ),
     # The source folder of the component
     code=data_prep_src_dir,
-    command="""ls;
-               python data_preprocessing.py;
+    command="""python data_preprocessing.py \
+            --data ${{inputs.data}}
             """,
     environment=f"{custom_env_name}:{custom_env_version}",
 )
