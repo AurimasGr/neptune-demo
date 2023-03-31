@@ -98,12 +98,13 @@ data_prep_component = command(
     },
     outputs=dict(
         train_data=Output(type="uri_folder", mode="rw_mount"),
-        test_data=Output(type="uri_folder", mode="rw_mount"),
+        valid_data=Output(type="uri_folder", mode="rw_mount"),
     ),
     # The source folder of the component
     code=data_prep_src_dir,
     command="""python data_preprocessing.py \
-            --data ${{inputs.data}}
+            --data ${{inputs.data}} \
+            --train_data ${{outputs.train_data}} --valid_data ${{outputs.valid_data}}
             """,
     environment=f"{custom_env_name}:{custom_env_version}",
 )
