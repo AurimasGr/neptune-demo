@@ -13,6 +13,9 @@ stages:
       pool:
         vmImage: ubuntu-latest
       steps:
+      - script: pip install -r ./azure-ci/requirements.txt
+        displayName: 'Prepare Environment'
+
       - script: echo "Hello, world!"
         displayName: 'Lint'
 
