@@ -41,7 +41,8 @@ def data_preprocessing_component(
     # )
 
     # Load dataset
-    df = load_data(args.data, cache=True)
+    df = pd.read_csv(args.data)
+    # load_data(args.data, cache=True)
 
     # Normalize sales data
     df_normalized = normalize_data(df, "Weekly_Sales")
