@@ -25,7 +25,7 @@ stages:
       - script: echo "Hello, world!"
         displayName: 'Integration Tests'
 
-      - script: python3 ./pipeline/build_pipeline.py
+      - script: python3 ./build_pipeline.py
         displayName: 'Build and Run Training Pipeline'
         env:
           AZURE_TENANT_ID: $(tenant)
