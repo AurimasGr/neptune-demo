@@ -32,7 +32,7 @@ def main():
     # input and output arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--train_data", type=str, help="path to train data")
-    parser.add_argument("--test_data", type=str, help="path to test data")
+    parser.add_argument("--valid_data", type=str, help="path to test data")
     parser.add_argument("--n_estimators", required=False, default=100, type=int)
     parser.add_argument("--learning_rate", required=False, default=0.1, type=float)
     parser.add_argument("--registered_model_name", type=str, help="model name")
