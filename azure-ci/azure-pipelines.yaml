@@ -25,8 +25,7 @@ stages:
       - script: echo "Integration Tests passed!"
         displayName: 'Integration Tests'
 
-#      - script: python3 ./build_pipeline.py
-      - script: echo "Training Completed, new Artifact is ready in the Model Registry!"
+      - script: python3 ml_workflow.py
         displayName: 'Build and Run Training Pipeline'
         env:
           AZURE_TENANT_ID: $(tenant)
