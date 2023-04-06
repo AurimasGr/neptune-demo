@@ -26,7 +26,7 @@ print("Azure ML SDK Version: ", azureml.core.VERSION)
 
 # load workspace
 workspace = Workspace(subscription_id="e1685108-7640-4417-8331-c2a3f43bc109",
-                      resource_group_name="neptune",
+                      resource_group="neptune",
                       workspace_name="aurimas-test-1",)
 print(
     "Workspace name: " + workspace.name,
