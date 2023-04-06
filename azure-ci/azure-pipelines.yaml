@@ -13,7 +13,7 @@ stages:
       pool:
         vmImage: ubuntu-latest
       steps:
-      - script: sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
+      - script: sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0 dotnet-runtime-3.1.23
         displayName: 'Install dotnet'
 
       - script: pip install -r ./azure-ci/requirements.txt
