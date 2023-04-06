@@ -1,2 +1,3 @@
 neptune
 azure-ai-ml
+azureml-defaults
