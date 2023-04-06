@@ -80,13 +80,15 @@ def get_compute_cluster(cluster_name):
 
 # compute_target = get_compute_cluster("cpu-cluster")
 compute_target = "cpu-cluster"
-
+print("I am here now 2")
 
 # Get the dataset
 data = Input(
     path="https://raw.githubusercontent.com/neptune-ai/examples/main/use-cases/time-series-forecasting/walmart-sales/dataset/aggregate_data.csv"
 )
 dataset = Dataset.Tabular.from_delimited_files(path=data["path"])
+
+print("I am here now 3")
 
 
 # create an ML experiment
