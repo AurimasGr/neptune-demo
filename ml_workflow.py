@@ -44,6 +44,7 @@ except Exception as ex:
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
+print("I am here now")
 
 # Get a handle to workspace
 ml_client = MLClient(
