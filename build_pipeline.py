@@ -61,8 +61,8 @@ print(
 
 custom_env_name = "aml-scikit-learn"
 custom_env_version = "0.1.0"
-data_prep_src_dir = "./components/data_prep"
-train_src_dir = "./components/train"
+data_prep_src_dir = "components_2/data_prep"
+train_src_dir = "components_2/train"
 
 from azure.ai.ml import command
 from azure.ai.ml import Input, Output
