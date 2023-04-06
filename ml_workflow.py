@@ -46,7 +46,12 @@ except Exception as ex:
 
 
 # Get a handle to workspace
-ml_client = MLClient.from_config(credential=credential)
+ml_client = MLClient(
+    credential=credential,
+    subscription_id=workspace.subscription_id,
+    resource_group_name=workspace.resource_group,
+    workspace_name=workspace.name,
+)
 
 
 # choose a name for your cluster
