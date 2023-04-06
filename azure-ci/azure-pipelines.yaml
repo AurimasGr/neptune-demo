@@ -13,7 +13,7 @@ stages:
       pool:
         vmImage: ubuntu-latest
       steps:
-      - script: sudo apt-get update && sudo apt-get install -y liblttng-ust0
+      - script: sudo apt-get update -y && sudo apt-get install -y liblttng-ust0
         displayName: 'Install dotnet'
 
       - script: pip install -r ./azure-ci/requirements.txt
