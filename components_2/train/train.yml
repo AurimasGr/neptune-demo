@@ -6,8 +6,6 @@ type: command
 inputs:
   train_data: 
     type: uri_folder
-  test_data: 
-    type: uri_folder
   learning_rate:
     type: number     
   registered_model_name:
