@@ -43,7 +43,7 @@ print(
 )
 
 custom_env_name = "neptune-example"
-custom_env_version = "0.2.0"
+custom_env_version = "1"
 data_prep_src_dir = "components_2/data_prep"
 train_src_dir = "components_2/train"
 
