@@ -126,14 +126,16 @@ valid_component = command(
 def ml_pipeline(
     pipeline_job_data_input,
 ):
-    # using data_prep_function like a python call with its own inputs
     data_prep_job = data_prep_component(
         data=pipeline_job_data_input
     )
 
-    # using train_func like a python call with its own inputs
     train_job = train_component(
         train_data=data_prep_job.outputs.train_data,  # note: using outputs from previous step
+    )
+
+    valid_job = valid_component(
+        valid_data=train_job.outputs.valid_data,  # note: using outputs from previous step
     )
 
     # a pipeline returns a dictionary of outputs
