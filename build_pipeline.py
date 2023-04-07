@@ -48,6 +48,7 @@ custom_env_name = "neptune-example"
 custom_env_version = "1"
 data_prep_src_dir = "components_2/data_prep"
 train_src_dir = "components_2/train"
+valid_src_dir = "components_2/validate"
 neptune_project = "common/project-time-series-forecasting"
 neptune_custom_run_id = hashlib.md5(str(time.time()).encode()).hexdigest()
 neptune_api_token = os.environ["NEPTUNE_API_TOKEN"]
@@ -89,6 +90,27 @@ train_component = command(
     command="""python train.py \
             --train_data ${{inputs.train_data}} \
             --valid_data ${{outputs.valid_data}} \
+            --neptune_project ${{inputs.neptune_project}} \
+            --neptune_custom_run_id ${{inputs.neptune_custom_run_id}} \
+            --neptune_api_token ${{inputs.neptune_api_token}}
+            """,
+    environment=f"{custom_env_name}:{custom_env_version}",
+)
+
+valid_component = command(
+    name="train",
+    display_name="Model validation",
+    description="reads a .csv input and validates it against a validation dataset",
+    inputs={
+        "valid_data": Input(type="uri_folder"),
+        "neptune_project": neptune_project,
+        "neptune_custom_run_id": neptune_custom_run_id,
+        "neptune_api_token": neptune_api_token
+    },
+    # The source folder of the component
+    code=valid_src_dir,
+    command="""python validate.py \
+            --train_data ${{inputs.valid_data}} \
             --neptune_project ${{inputs.neptune_project}} \
             --neptune_custom_run_id ${{inputs.neptune_custom_run_id}} \
             --neptune_api_token ${{inputs.neptune_api_token}}
