@@ -42,7 +42,7 @@ print(
     f"Dataset with name {aggregate_data.name} was registered to workspace, the dataset version is {aggregate_data.version}"
 )
 
-custom_env_name = "aml-scikit-learn"
+custom_env_name = "neptune-example"
 custom_env_version = "0.1.0"
 data_prep_src_dir = "components_2/data_prep"
 train_src_dir = "components_2/train"
