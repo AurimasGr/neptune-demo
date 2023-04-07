@@ -76,7 +76,10 @@ train_component = command(
     display_name="Model training",
     description="reads a .csv input, splits into training and validation, trains model and outputs validation dataset",
     inputs={
-        "train_data": Input(type="uri_folder")
+        "train_data": Input(type="uri_folder"),
+        "neptune_project": neptune_project,
+        "neptune_custom_run_id": neptune_custom_run_id,
+        "neptune_api_token": neptune_api_token
     },
     outputs=dict(
         valid_data=Output(type="uri_folder", mode="rw_mount")
@@ -86,9 +89,9 @@ train_component = command(
     command="""python train.py \
             --train_data ${{inputs.train_data}} \
             --valid_data ${{outputs.valid_data}} \
-            --neptune_project ${{neptune_project}} \
-            --neptune_custom_run_id ${{neptune_custom_run_id}} \
-            --neptune_api_token ${{neptune_api_token}}
+            --neptune_project ${{inputs.neptune_project}} \
+            --neptune_custom_run_id ${{inputs.neptune_custom_run_id}} \
+            --neptune_api_token ${{inputs.neptune_api_token}}
             """,
     environment=f"{custom_env_name}:{custom_env_version}",
 )
