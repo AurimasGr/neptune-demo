@@ -1,5 +1,9 @@
-from utils import *
 import argparse
+import os
+
+import pandas as pd
+
+from utils import normalize_data, encode_categorical_data, create_lags
 
 
 def data_preprocessing_component():
@@ -12,9 +16,6 @@ def data_preprocessing_component():
     # # Load dataset
     df = pd.read_csv(args.data)
     print(f"df loaded: {df}")
-
-    # Drop index
-    # df = df.drop("Column1", axis=1)
 
     # Normalize sales data
     df_normalized = normalize_data(df, "Weekly_Sales")

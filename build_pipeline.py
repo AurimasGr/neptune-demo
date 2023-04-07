@@ -1,9 +1,10 @@
 import os
 
-# Handle to the workspace
 from azure.ai.ml import MLClient
-
-# Authentication package
+from azure.ai.ml.entities import Data
+from azure.ai.ml.constants import AssetTypes
+from azure.ai.ml import command
+from azure.ai.ml import dsl, Output, Input
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 cpu_compute_target = "cpu-cluster"
@@ -23,12 +24,6 @@ ml_client = MLClient(
     resource_group_name="neptune",
     workspace_name="aurimas-test-1",
 )
-
-from azure.ai.ml.entities import Data
-from azure.ai.ml.constants import AssetTypes
-from azure.ai.ml import command
-from azure.ai.ml import Input, Output
-
 
 web_path = "https://raw.githubusercontent.com/neptune-ai/examples/main/use-cases/time-series-forecasting/walmart-sales/dataset/aggregate_data.csv"
 
@@ -52,31 +47,10 @@ custom_env_version = "0.1.0"
 data_prep_src_dir = "components_2/data_prep"
 train_src_dir = "components_2/train"
 
-# data_prep_component = command(
-#     name="data_prep_credit_defaults",
-#     display_name="Data preparation for training",
-#     description="reads a .xl input, split the input to train and test",
-#     inputs={
-#         "data": Input(type="uri_folder"),
-#         "test_train_ratio": Input(type="number"),
-#     },
-#     outputs=dict(
-#         train_data=Output(type="uri_folder", mode="rw_mount"),
-#         test_data=Output(type="uri_folder", mode="rw_mount"),
-#     ),
-#     # The source folder of the component
-#     code=data_prep_src_dir,
-#     command="""python data_prep.py \
-#             --data ${{inputs.data}} --test_train_ratio ${{inputs.test_train_ratio}} \
-#             --train_data ${{outputs.train_data}} --test_data ${{outputs.test_data}} \
-#             """,
-#     environment=f"{custom_env_name}:{custom_env_version}",
-# )
-
 data_prep_component = command(
-    name="data_prep_credit_defaults",
+    name="data_prep",
     display_name="Data preparation for training",
-    description="reads a .xl input, split the input to train and test",
+    description="reads a .csv input, prepares it for training",
     inputs={
         "data": Input(type="uri_folder")
     },
@@ -92,43 +66,41 @@ data_prep_component = command(
     environment=f"{custom_env_name}:{custom_env_version}",
 )
 
-# importing the Component Package
-from azure.ai.ml import load_component
-
-# Loading the component from the yml file
-train_component = load_component(source=os.path.join(train_src_dir, "train.yml"))
-
-train_component = ml_client.create_or_update(train_component)
-
-# Create (register) the component in your workspace
-print(
-    f"Component {train_component.name} with Version {train_component.version} is registered"
+train_component = command(
+    name="train",
+    display_name="Model training",
+    description="reads a .csv input, splits into training and validation, trains model and outputs validation dataset",
+    inputs={
+        "train_data": Input(type="uri_folder")
+    },
+    outputs=dict(
+        valid_data=Output(type="uri_folder", mode="rw_mount")
+    ),
+    # The source folder of the component
+    code=train_src_dir,
+    command="""python train.py \
+            --data ${{inputs.train_data}} \
+            --train_data ${{outputs.valid_data}}
+            """,
+    environment=f"{custom_env_name}:{custom_env_version}",
 )
 
-# the dsl decorator tells the sdk that we are defining an Azure ML pipeline
-from azure.ai.ml import dsl, Input, Output
 
 @dsl.pipeline(
     compute=cpu_compute_target,
     description="E2E data_perp-train pipeline",
 )
-def credit_defaults_pipeline(
+def ml_pipeline(
     pipeline_job_data_input,
-    # pipeline_job_test_train_ratio,
-    pipeline_job_learning_rate,
-    pipeline_job_registered_model_name,
 ):
     # using data_prep_function like a python call with its own inputs
     data_prep_job = data_prep_component(
-        data=pipeline_job_data_input,
-        # test_train_ratio=pipeline_job_test_train_ratio,
+        data=pipeline_job_data_input
     )
 
     # using train_func like a python call with its own inputs
     train_job = train_component(
         train_data=data_prep_job.outputs.train_data,  # note: using outputs from previous step
-        learning_rate=pipeline_job_learning_rate,  # note: using a pipeline input as parameter
-        registered_model_name=pipeline_job_registered_model_name,
     )
 
     # a pipeline returns a dictionary of outputs
@@ -137,15 +109,9 @@ def credit_defaults_pipeline(
         "pipeline_job_train_data": data_prep_job.outputs.train_data
     }
 
-registered_model_name = "credit_defaults_model"
 
-# Let's instantiate the pipeline with the parameters of our choice
-pipeline = credit_defaults_pipeline(
-    # pipeline_job_data_input=Input(type="uri_file", path=credit_data.path),
-    pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path),
-    # pipeline_job_test_train_ratio=0.24,
-    pipeline_job_learning_rate=0.05,
-    pipeline_job_registered_model_name=registered_model_name,
+pipeline = ml_pipeline(
+    pipeline_job_data_input=Input(type="uri_file", path=aggregate_data.path)
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
