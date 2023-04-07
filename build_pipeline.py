@@ -1,4 +1,6 @@
 import os
+import hashlib
+import time
 
 from azure.ai.ml import MLClient
 from azure.ai.ml.entities import Data
@@ -46,6 +48,9 @@ custom_env_name = "neptune-example"
 custom_env_version = "1"
 data_prep_src_dir = "components_2/data_prep"
 train_src_dir = "components_2/train"
+neptune_project = "common/project-time-series-forecasting"
+neptune_custom_run_id = hashlib.md5(str(time.time()).encode()).hexdigest()
+neptune_api_token = os.environ["NEPTUNE_API_TOKEN"]
 
 data_prep_component = command(
     name="data_prep",
@@ -80,7 +85,10 @@ train_component = command(
     code=train_src_dir,
     command="""python train.py \
             --train_data ${{inputs.train_data}} \
-            --valid_data ${{outputs.valid_data}}
+            --valid_data ${{outputs.valid_data}} \
+            --neptune_project ${{neptune_project}} \
+            --neptune_custom_run_id ${{neptune_custom_run_id}} \
+            --neptune_api_token ${{neptune_api_token}}
             """,
     environment=f"{custom_env_name}:{custom_env_version}",
 )

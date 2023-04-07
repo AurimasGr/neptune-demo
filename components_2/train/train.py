@@ -31,7 +31,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--train_data", type=str, help="path to train data")
     parser.add_argument("--valid_data", type=str, help="path to validation data")
+    parser.add_argument("--neptune_project", type=str, help="neptune project to log to")
+    parser.add_argument("--neptune_custom_run_id", type=str, help="neptune run id to log to")
+    parser.add_argument("--neptune_api_token", type=str, help="neptune service account token")
     args = parser.parse_args()
+
+    os.environ["NEPTUNE_PROJECT"] = args.neptune_project
+    os.environ["NEPTUNE_CUSTOM_RUN_ID"] = args.neptune_custom_run_id
+    os.environ["NEPTUNE_API_TOKEN"] = args.neptune_api_token
 
     # paths are mounted as folder, therefore, we are selecting the file from folder
     train_df = pd.read_csv(select_first_file(args.train_data))
