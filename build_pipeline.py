@@ -110,7 +110,7 @@ valid_component = command(
     # The source folder of the component
     code=valid_src_dir,
     command="""python validate.py \
-            --train_data ${{inputs.valid_data}} \
+            --valid_data ${{inputs.valid_data}} \
             --neptune_project ${{inputs.neptune_project}} \
             --neptune_custom_run_id ${{inputs.neptune_custom_run_id}} \
             --neptune_api_token ${{inputs.neptune_api_token}}
