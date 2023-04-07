@@ -11,9 +11,10 @@ def data_preprocessing_component():
 
     # # Load dataset
     df = pd.read_csv(args.data)
+    print(f"df loaded: {df}")
 
     # Drop index
-    df = df.drop("Column1", axis=1)
+    # df = df.drop("Column1", axis=1)
 
     # Normalize sales data
     df_normalized = normalize_data(df, "Weekly_Sales")
@@ -29,7 +30,7 @@ def data_preprocessing_component():
     train_data_path = os.path.join(args.train_data, "train_data.csv")
     df_encoded.to_csv(train_data_path, index=False)
 
-    print(df_encoded)
+    print(f"df encoded: {df_encoded}")
 
 
 if __name__ == "__main__":
