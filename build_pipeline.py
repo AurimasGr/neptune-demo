@@ -79,8 +79,8 @@ train_component = command(
     # The source folder of the component
     code=train_src_dir,
     command="""python train.py \
-            --data ${{inputs.train_data}} \
-            --train_data ${{outputs.valid_data}}
+            --train_data ${{inputs.train_data}} \
+            --valid_data ${{outputs.valid_data}}
             """,
     environment=f"{custom_env_name}:{custom_env_version}",
 )
