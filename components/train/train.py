@@ -73,14 +73,6 @@ def main():
             }
         )
 
-    # Split data into train and validation
-    features_to_exclude = ["Weekly_Sales", "Date", "Year"]
-    X = train_df.loc[:, ~train_df.columns.isin(features_to_exclude)]
-    y = train_df.loc[:, "Weekly_Sales"]
-    X_train, X_val, y_train, y_val = train_test_split(
-        X, y, test_size=0.20, random_state=42, shuffle=False
-    )
-
     X_train, X_valid, y_train, y_valid = get_train_data(
         train_df[train_df.Dept == 1], ["Weekly_Sales", "Year"]
     )
@@ -101,7 +93,7 @@ def main():
     run["model_version/serialized_model"] = npt_utils.get_serialized_model(model)
 
     # Concatenate x and y train data
-    validation_df = pd.concat([X_val, y_val], axis=1)
+    validation_df = pd.concat([X_valid, y_valid], axis=1)
 
     # Save train and validation data
     validation_data_path = os.path.join(args.valid_data, "validation_data.csv")
