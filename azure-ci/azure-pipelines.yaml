@@ -25,13 +25,6 @@ stages:
       - script: echo "Integration Tests passed!"
         displayName: 'Integration Tests'
 
-#      - script: python3 ./dependencies/build_environment.py
-#        displayName: 'Build environment for pipeline steps'
-#        env:
-#          AZURE_TENANT_ID: $(tenant)
-#          AZURE_CLIENT_ID: $(client)
-#          AZURE_CLIENT_SECRET: $(secret)
-
       - script: python3 build_pipeline.py
         displayName: 'Build and Run Training Pipeline'
         env:

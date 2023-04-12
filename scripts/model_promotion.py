@@ -2,6 +2,7 @@ import neptune
 from neptune.exceptions import ModelNotFound
 import os
 
+NEPTUNE_PROJECT = "common/project-time-series-forecasting" #change to your own neptune project
 
 os.environ['NEPTUNE_PROJECT'] = "common/project-time-series-forecasting"
 

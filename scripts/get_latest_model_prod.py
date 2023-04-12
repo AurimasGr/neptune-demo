@@ -3,7 +3,9 @@ from neptune.exceptions import ModelNotFound
 import os
 
 
-os.environ['NEPTUNE_PROJECT'] = "common/project-time-series-forecasting"
+NEPTUNE_PROJECT = "common/project-time-series-forecasting" #change to your own neptune project
+
+os.environ['NEPTUNE_PROJECT'] = NEPTUNE_PROJECT
 
 
 model_key = "PRO"

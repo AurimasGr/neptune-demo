@@ -7,6 +7,10 @@ from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 CUSTOM_ENV_NAME = "neptune-example"
 DEPENDENCIES_DIR = "./dependencies"
 
+AZURE_SUBSCRIPTION_ID = "<YOUR SUBSCRIPTION ID>"
+AZUREML_RESOURCE_GROUP_NAME = "<YOUR RESOURCE GROUP NAME>"
+AZUREML_WORKSPACE_NAME = "<YOUR WORKSPACE NAME>"
+
 
 def main():
     try:
@@ -20,9 +24,9 @@ def main():
     # Get a handle to the workspace
     ml_client = MLClient(
         credential=credential,
-        subscription_id="e1685108-7640-4417-8331-c2a3f43bc109",
-        resource_group_name="neptune",
-        workspace_name="aurimas-test-1",
+        subscription_id=AZURE_SUBSCRIPTION_ID,
+        resource_group_name=AZUREML_RESOURCE_GROUP_NAME,
+        workspace_name=AZUREML_WORKSPACE_NAME,
     )
 
     pipeline_job_env = Environment(
@@ -31,7 +35,7 @@ def main():
         tags={"scikit-learn": "0.24.2"},
         conda_file=os.path.join(DEPENDENCIES_DIR, "conda.yml"),
         image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest",
-        version="0.2.0",
+        version="0.1.0",
     )
     pipeline_job_env = ml_client.environments.create_or_update(pipeline_job_env)
 
