@@ -1,4 +1,5 @@
 import os
+import logging
 
 from azure.ai.ml.entities import Environment
 from azure.ai.ml import MLClient
@@ -39,7 +40,7 @@ def main():
     )
     pipeline_job_env = ml_client.environments.create_or_update(pipeline_job_env)
 
-    print(
+    logging.info(
         f"Environment with name {pipeline_job_env.name} is registered to workspace, the environment version is {pipeline_job_env.version}"
     )
 

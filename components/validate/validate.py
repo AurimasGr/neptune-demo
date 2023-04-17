@@ -1,11 +1,10 @@
 import argparse
 import os
+import logging
 
-import joblib
 import neptune
 import pandas as pd
 import neptune.integrations.prophet as npt_utils
-import seaborn as sns
 from prophet.serialize import model_from_json
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
@@ -95,12 +94,12 @@ def main():
 
     try:
         with neptune.init_model(key=model_key) as model:
-            print("Creating a new model version...")
+            logging.info("Creating a new model version...")
             model_version = neptune.init_model_version(model=f"{project_key}-{model_key}")
 
     except NeptuneModelKeyAlreadyExistsError:
-        print(f"A model with the provided key {model_key} already exists in this project.")
-        print("Creating a new model version...")
+        logging.info(f"A model with the provided key {model_key} already exists in this project.")
+        logging.info("Creating a new model version...")
         model_version = neptune.init_model_version(model=f"{project_key}-{model_key}", name="Prophet")
 
     model_version.change_stage("staging")

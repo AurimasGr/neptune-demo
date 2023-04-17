@@ -1,5 +1,6 @@
 import argparse
 import os
+import logging
 
 import neptune
 import pandas as pd
@@ -49,8 +50,6 @@ def main():
 
     # paths are mounted as folder, therefore, we are selecting the file from folder
     train_df = pd.read_csv(select_first_file(args.train_data))
-
-    print(train_df)
 
     def get_train_data(df: pd.DataFrame, features_to_exclude=None):
         if features_to_exclude is None:
@@ -102,8 +101,6 @@ def main():
     # Save train and validation data
     validation_data_path = os.path.join(args.valid_data, "validation_data.csv")
     validation_df.to_csv(validation_data_path, index=False)
-
-    print(f"df encoded: {validation_df}")
 
 
 if __name__ == "__main__":

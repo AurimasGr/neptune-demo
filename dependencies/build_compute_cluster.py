@@ -1,3 +1,5 @@
+import logging
+
 from azure.ai.ml.entities import AmlCompute
 from azure.ai.ml import MLClient
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
@@ -27,12 +29,12 @@ def create_compute_cluster():
     try:
         # let's see if the compute target already exists
         cpu_cluster = ml_client.compute.get(cpu_compute_target)
-        print(
+        logging.info(
             f"You already have a cluster named {cpu_compute_target}, we'll reuse it as is."
         )
 
     except Exception:
-        print("Creating a new cpu compute target...")
+        logging.info("Creating a new cpu compute target...")
 
         # Let's create the Azure ML compute object with the intended parameters
         cpu_cluster = AmlCompute(
@@ -55,7 +57,7 @@ def create_compute_cluster():
         # Now, we pass the object to MLClient's create_or_update method
         cpu_cluster = ml_client.begin_create_or_update(cpu_cluster)
 
-    print(
+    logging.info(
         f"AMLCompute with name {cpu_cluster.name} is created, the compute size is {cpu_cluster.size}"
     )
 

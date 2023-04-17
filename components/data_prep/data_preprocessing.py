@@ -1,5 +1,6 @@
 import argparse
 import os
+import logging
 
 import pandas as pd
 
@@ -15,7 +16,7 @@ def data_preprocessing_component():
 
     # # Load dataset
     df = pd.read_csv(args.data)
-    print(f"df loaded: {df}")
+    logging.info(f"df loaded: {df}")
 
     # Normalize sales data
     df_normalized = normalize_data(df, "Weekly_Sales")
@@ -31,7 +32,7 @@ def data_preprocessing_component():
     train_data_path = os.path.join(args.train_data, "train_data.csv")
     df_encoded.to_csv(train_data_path, index=False)
 
-    print(f"df encoded: {df_encoded}")
+    logging.info(f"df encoded: {df_encoded}")
 
 
 if __name__ == "__main__":

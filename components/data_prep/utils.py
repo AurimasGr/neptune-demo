@@ -1,4 +1,5 @@
 import os
+import logging
 
 import numpy as np
 import pandas as pd
@@ -31,7 +32,7 @@ def pre_process_data(df):
 def load_data(path, cache=False, all_df=False):
     cwd = os.getcwd()  # Get the current working directory (cwd)
     files = os.listdir(cwd)  # Get all the files in that directory
-    print("Files in %r: %s" % (cwd, files))
+    logging.info("Files in %r: %s" % (cwd, files))
     if os.path.exists(f"{path}/aggregate_data.csv") and cache == True:
         return pd.read_csv(f"{path}/aggregate_data.csv", index_col=0)
 
@@ -47,7 +48,7 @@ def load_data(path, cache=False, all_df=False):
 
 
 def normalize_data(df, column, n_std=2):
-    print(f"Working on column: {column}")
+    logging.info(f"Working on column: {column}")
 
     mean = df[column].mean()
     sd = df[column].std()
