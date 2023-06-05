@@ -25,7 +25,7 @@ AZUREML_WORKSPACE_NAME = "neptune-demo"
 
 def compose_pipeline(compute_target="cpu-cluster",
                      custom_env_name="neptune-example",
-                     custom_env_version="2",
+                     custom_env_version="1",
                      neptune_project="common/project-time-series-forecasting",
                      neptune_custom_run_id=""):
     try:
