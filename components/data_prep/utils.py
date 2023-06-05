@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def pre_process_data(df):
+def pre_process_data(df: pd.DataFrame) -> pd.DataFrame:
     # process dates and create year, month and week features
     df["Date"] = pd.to_datetime(df.Date)
     df["Year"] = pd.DatetimeIndex(df.Date).year

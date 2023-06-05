@@ -7,7 +7,7 @@ import pandas as pd
 from utils import normalize_data, encode_categorical_data, create_lags
 
 
-def data_preprocessing_component():
+def data_preprocessing_component() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=str, help="path to input data")

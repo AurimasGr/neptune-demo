@@ -1,6 +1,5 @@
 import argparse
 import os
-import logging
 
 import neptune
 import pandas as pd

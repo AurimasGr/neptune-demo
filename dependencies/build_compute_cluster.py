@@ -10,7 +10,7 @@ AZUREML_RESOURCE_GROUP_NAME = "<YOUR RESOURCE GROUP NAME>"
 AZUREML_WORKSPACE_NAME = "<YOUR WORKSPACE NAME>"
 
 
-def create_compute_cluster():
+def create_compute_cluster() -> None:
     try:
         credential = DefaultAzureCredential()
         credential.get_token("https://management.azure.com/.default")

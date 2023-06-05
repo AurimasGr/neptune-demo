@@ -20,7 +20,7 @@ neptune_api_token = os.environ["NEPTUNE_API_TOKEN"]
 
 AZURE_SUBSCRIPTION_ID = "e1685108-7640-4417-8331-c2a3f43bc109"
 AZUREML_RESOURCE_GROUP_NAME = "neptune"
-AZUREML_WORKSPACE_NAME = "aurimas-test-1"
+AZUREML_WORKSPACE_NAME = "neptune-demo"
 
 
 def compose_pipeline(compute_target="cpu-cluster",
